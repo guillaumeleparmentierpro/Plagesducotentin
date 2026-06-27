@@ -1,21 +1,21 @@
 {
-  "short_name": "Plages du Cotentin",
-  "name": "plagesducotentin.fr - Indicateurs Météo & Marées",
+  "short_name": "Plages Cotentin",
+  "name": "plagesducotentin.fr - Cotentin Web Studio",
   "icons": [
     {
-      "src": "css/icon-192.png",
+      "src": "android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "css/icon-512.png",
-      "type": "image/png",
+      "src": "android-chrome-512x512.jpg",
+      "type": "image/jpeg",
       "sizes": "512x512"
     }
   ],
   "start_url": "/index.html",
-  "background_color": "#f8fafc",
-  "theme_color": "#0284c7",
+  "background_color": "#fefce8",
+  "theme_color": "#1e3a8a",
   "display": "standalone",
   "orientation": "portrait"
 }
