@@ -1,14 +1,19 @@
-// Nom du cache - À changer (v2, v3...) à chaque fois que tu modifies le HTML/JS/CSS pour forcer la mise à jour
-const CACHE_NAME = 'plages-cotentin-v1';
+const CACHE_NAME = 'plages-cotentin-v2';
 
-// Liste des fichiers à mettre en cache pour le mode hors-ligne
+// Liste des fichiers à mettre en cache
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
-  './css/style.css',
   './js/app.js',
-  './js/moteur-calcul.js'
+  './js/moteur-calcul.js',
+  // On ajoute tous nos nouveaux fichiers d'icônes
+  './favicon.ico',
+  './favicon-16x16.png',
+  './favicon-32x32.png',
+  './apple-touch-icon.png',
+  './android-chrome-192x192.png',
+  './android-chrome-512x512.jpg'
 ];
 
 // 1. Événement d'INSTALLATION : On met les fichiers en cache
