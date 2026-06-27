@@ -7,55 +7,50 @@ export const MoteurCalcul = {
   
   // 1. Analyse pour le mode Pêche à pied
   // On passe les données de marée, et l'heure de consultation du téléphone
-  analyserPeche(donneesMaree, dateActuelle = new Date()) {
+ analyserPeche(donneesMaree, dateActuelle = new Date()) {
     const { coef, heureBasseMer } = donneesMaree;
 
-    // RÈGLE 1 : Le coefficient est-il suffisant ?
+    // RÈGLE 1 : Le coefficient
     if (coef < 70) {
       return {
         statut: "ROUGE",
-        message: `Coefficient trop faible (${coef}). La mer ne se retirera pas assez pour une bonne pêche.`
+        message: `Coefficient trop faible (${coef}). La mer ne se retirera pas assez.`
       };
     }
 
-    // RÈGLE 2 : Calcul du timing (La fenêtre de tir)
-    // On calcule la différence en minutes entre maintenant et l'heure de la basse mer
+    // Calcul du timing en minutes
     const msDifference = heureBasseMer.getTime() - dateActuelle.getTime();
     const minutesAvantBasseMer = Math.floor(msDifference / (1000 * 60));
 
-    // Si on a dépassé l'heure de la basse mer de plus de 45 minutes -> DANGER
-    if (minutesAvantBasseMer < -45) {
+    // RÈGLE 2 : SÉCURITÉ ABSOLUE (Le changement est ici)
+    // Dès que l'heure de la basse mer est atteinte (0 min) ou dépassée -> DANGER
+    if (minutesAvantBasseMer <= 0) {
       return {
         statut: "ROUGE",
-        message: "Danger : La mer remonte ! Il faut regagner la côte immédiatement."
+        message: "🚨 Basse mer atteinte ! La marée remonte, regagnez la côte immédiatement."
       };
     }
 
-    // Si on est dans la bonne fenêtre : entre 2h (120 min) avant et 45 min après
-    if (minutesAvantBasseMer <= 120 && minutesAvantBasseMer >= -45) {
+    // RÈGLE 3 : La fenêtre de descente (entre 2h avant et la basse mer)
+    if (minutesAvantBasseMer <= 120 && minutesAvantBasseMer > 0) {
       let precisionCoef = coef >= 90 ? "Grandes marées !" : "Bons coefficients.";
       return {
         statut: "VERT",
-        message: `${precisionCoef} L'eau est au plus bas, c'est le moment parfait.`
+        message: `${precisionCoef} La mer descend, suivez l'eau en toute sécurité.`
       };
     }
 
-    // Si on est trop en avance (plus de 2h avant la basse mer)
+    // RÈGLE 4 : Trop en avance
     if (minutesAvantBasseMer > 120) {
-      // Calcul pour un affichage propre du temps d'attente
       const heuresAttente = Math.floor(minutesAvantBasseMer / 60);
       const minutesRestantes = minutesAvantBasseMer % 60;
       return {
         statut: "ORANGE",
-        message: `Patience, l'eau descend... La bonne fenêtre s'ouvre dans ${heuresAttente}h et ${minutesRestantes}m.`
+        message: `Patience, l'eau descend... Départ conseillé dans ${heuresAttente}h et ${minutesRestantes}m.`
       };
     }
 
-    // Sécurité par défaut
-    return {
-      statut: "ORANGE",
-      message: "Analyse des conditions maritimes en cours..."
-    };
+    return { statut: "ORANGE", message: "Analyse en cours..." };
   },
 
   // 2. Analyse pour le mode Bronzette / Plage (à venir)
