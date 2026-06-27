@@ -2,28 +2,47 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <!-- Balise vitale pour le mobile : empêche le zoom intempestif et adapte la largeur -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Plages du Cotentin</title>
+    <title>plagesducotentin.fr - Cotentin Web Studio</title>
     
     <!-- PWA / Manifest -->
     <link rel="manifest" href="manifest.json">
-    <!-- Couleur de la barre d'état sur smartphone -->
-    <meta name="theme-color" content="#0284c7">
-    <!-- Icône pour les appareils Apple (iOS) -->
-    <link rel="apple-touch-icon" href="css/icon-192.png">
+    <!-- Couleur de la barre d'état sur smartphone (notre Bleu Marine) -->
+    <meta name="theme-color" content="#1e3a8a">
     
-    <!-- CSS (Tailwind via CDN pour prototyper une interface propre instantanément) -->
+    <!-- Icônes pour Apple (iOS) et Android (Favicon) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    
+    <!-- CSS (Tailwind via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Fichier CSS local pour tes propres ajustements si besoin -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Configuration Tailwind personnalisée pour notre thème -->
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                cottentin: {
+                  sable: '#fefce8', // bg-yellow-50
+                  marine: '#1e3a8a', // text-blue-900
+                  soleil: '#facc15', // text-yellow-400
+                }
+              }
+            }
+          }
+        }
+    </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-cottentin-sable text-cottentin-marine font-sans antialiased">
 
-    <!-- En-tête de l'application -->
-    <header class="bg-sky-600 text-white p-4 shadow-md sticky top-0 z-50">
+    <!-- En-tête de l'application (Bleu Marine, texte Jaune Soleil) -->
+    <header class="bg-cottentin-marine text-cottentin-soleil p-4 shadow-md sticky top-0 z-50">
         <h1 class="text-2xl font-bold text-center">🌊 Plages du Cotentin</h1>
-        <p class="text-sm text-center text-sky-100">L'indicateur d'activités en temps réel</p>
+        <p class="text-sm text-center text-yellow-100">L'indicateur d'activités de Cotentin Web Studio</p>
     </header>
 
     <!-- Conteneur principal -->
@@ -35,7 +54,7 @@
                 <h2 class="font-bold text-lg">🦀 Pêche à pied</h2>
                 <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-bold" id="statut-peche">ORANGE</span>
             </div>
-            <p class="text-sm text-gray-600" id="message-peche">En attente des coefficients et heures de marée...</p>
+            <p class="text-sm text-cottentin-marine" id="message-peche">En attente des coefficients et heures de marée...</p>
         </section>
 
         <!-- Carte : Plage & Bronzette -->
@@ -44,22 +63,21 @@
                 <h2 class="font-bold text-lg">🏖️ Bronzette & Sable</h2>
                 <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold" id="statut-plage">À CALCULER</span>
             </div>
-            <p class="text-sm text-gray-600" id="message-plage">Croisement météo et vent en cours...</p>
+            <p class="text-sm text-cottentin-marine" id="message-plage">Croisement météo et vent en cours...</p>
         </section>
 
     </main>
 
     <!-- Scripts -->
-    <!-- type="module" est indispensable pour utiliser les 'import / export' de tes fichiers JS -->
     <script type="module" src="js/app.js"></script>
     
-    <!-- Enregistrement du Service Worker (le moteur de la PWA qui gère le mode hors ligne et l'installation) -->
+    <!-- Enregistrement du Service Worker (Pas de changement ici, mais à noter) -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker enregistré avec succès !', reg.scope))
-                    .catch(err => console.error('Erreur Service Worker :', err));
+                    .then(reg => console.log('Service Worker enregistré !', reg.scope))
+                    .catch(err => console.error('Erreur SW :', err));
             });
         }
     </script>
